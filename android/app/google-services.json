@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "746791877599",
+    "project_id": "wishlist-ef4e9",
+    "storage_bucket": "wishlist-ef4e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746791877599:android:0601dc70bc7e7e877aa26a",
+        "android_client_info": {
+          "package_name": "com.sammour.wishlist_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746791877599-ckn3c526123tk0mie39i4vic4uk37e9u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBllUg693GMEtpPmcoSF_iBSwApkGu6Ey8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746791877599-ckn3c526123tk0mie39i4vic4uk37e9u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
