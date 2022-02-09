@@ -54,7 +54,7 @@ class _WishlistViewState extends State<WishlistView> {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return const Center(child: CircularProgressIndicator());
                         }
-                        if (!snapshot.hasData) {
+                        if (snapshot.data!.docs.isEmpty) {
                           return ListView(
                             padding: const EdgeInsets.all(20.0),
                             shrinkWrap: true,

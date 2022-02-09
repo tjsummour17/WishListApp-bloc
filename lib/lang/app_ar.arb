@@ -21,5 +21,8 @@
   "welcomeMessage": "مرحبا {value},",
   "title": "عنوان رغبتك",
   "description": "تفاصيل رغبتك",
-  "editWish": "تعديل الرغبة"
+  "editWish": "تعديل الرغبة",
+  "delete": "حذف",
+  "areYouSureToDeleteWish": "هل انت متأكد من حذف هذه الرغبة"
+
 }

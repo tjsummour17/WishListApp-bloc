@@ -35,3 +35,11 @@ class EditWish extends WishlistEvent {
   @override
   List<Object?> get props => [];
 }
+class DeleteWish extends WishlistEvent {
+  final String wishId;
+
+  DeleteWish({required String userId, required this.wishId}) : super(userId);
+
+  @override
+  List<Object?> get props => [];
+}

@@ -54,7 +54,23 @@ class WishlistService {
       if (wishImage != null) {
         wish.imageRef = await _uploadFile(wishImage.path);
       }
-      FirebaseFirestore.instance.collection(_wishlistCollectionName).doc(wish.docId).update(wish.toJson()).then((value) => log("Wish Updated")).catchError((error) => log("Failed to update Wish: $error"));
+      FirebaseFirestore.instance
+          .collection(_wishlistCollectionName)
+          .doc(wish.docId)
+          .update(wish.toJson())
+          .then((value) => log("Wish Updated"))
+          .catchError((error) => log("Failed to update Wish: $error"));
+      return true;
+    } catch (e) {
+      log(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> deleteWish({required String wishId}) async {
+    await Firebase.initializeApp();
+    try {
+      FirebaseFirestore.instance.collection(_wishlistCollectionName).doc(wishId).delete().then((value) => log("Wish deleted")).catchError((error) => log("Failed to deleted Wish: $error"));
       return true;
     } catch (e) {
       log(e.toString());
@@ -75,5 +91,5 @@ class WishlistService {
     }
   }
 
-  static Future<String> getImageUrl(String fileName) async => await FirebaseStorage.instance.ref("uploads/$fileName").getDownloadURL();
+  static Future<String> getImageUrl(String fileName) async => (fileName.isNotEmpty) ? await FirebaseStorage.instance.ref("uploads/$fileName").getDownloadURL() : "";
 }

@@ -28,5 +28,7 @@
   },
   "title": "Title",
   "description": "Description",
-  "editWish": "Edit Wish"
+  "editWish": "Edit Wish",
+  "delete": "Delete",
+  "areYouSureToDeleteWish": "Are you sure to delete wish?"
 }
