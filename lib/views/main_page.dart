@@ -20,16 +20,11 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    UserProvider userProvider = Provider.of<UserProvider>(context);
     MainPageProvider mainPageProvider = Provider.of<MainPageProvider>(context);
     return Scaffold(
       appBar: AppBar(title: Text(mainPageProvider.bottomNavBarItems(context)[mainPageProvider.pageIndex].label ?? "")),
       body: mainPageProvider.mainPageViews[mainPageProvider.pageIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: mainPageProvider.pageIndex,
-        items: mainPageProvider.bottomNavBarItems(context),
-        onTap: mainPageProvider.setPageIndex,
-      ),
+      bottomNavigationBar: BottomNavigationBar(currentIndex: mainPageProvider.pageIndex, items: mainPageProvider.bottomNavBarItems(context), onTap: mainPageProvider.setPageIndex),
     );
   }
 }

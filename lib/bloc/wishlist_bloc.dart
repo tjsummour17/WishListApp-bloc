@@ -1,27 +1,58 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wishlist_app/models/wish.dart';
 import 'package:wishlist_app/services/wishlist_repository.dart';
 import 'package:wishlist_app/services/wishlist_service.dart';
 
-part 'all_games_event.dart';
+part 'wishlist_event.dart';
 
-part 'all_games_state.dart';
+part 'wishlist_state.dart';
 
-class WishlistBloc extends Bloc<AllGamesEvent, WishlistState> {
-  // final WishlistRepository wishListRepository;
-  // String userId;
-  WishlistBloc() : super(const WishlistState(wishlist: [])) {
-    on<GetWishlist>(_mapGetGamesEventToState);
+class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
+  late WishlistService wishlistService;
+  late Stream<QuerySnapshot> wishList;
+
+  WishlistBloc() : super(const WishlistState()) {
+    wishlistService = WishlistService();
+    on<GetWishlist>(_mapGetWishlistEventToState);
+    on<AddToWishlist>(_mapAddWishEventToState);
+    on<EditWish>(_mapEditWishEventToState);
   }
 
-  void _mapGetGamesEventToState(GetWishlist event, Emitter<WishlistState> emit) async {
+  void _mapGetWishlistEventToState(GetWishlist event, Emitter<WishlistState> emit) async {
     try {
       emit(state.copyWith(status: WishlistStatus.loading));
-      // final wishList = await wishListRepository.getGames(userId);
-      emit(state.copyWith(status: WishlistStatus.success, wishlist: []));
+      wishList = await WishlistService().fetchWishlist(event.userId);
+      emit(state.copyWith(status: WishlistStatus.success, wishlistStream: wishList));
     } catch (error) {
       emit(state.copyWith(status: WishlistStatus.error));
+      log(error.toString());
+    }
+  }
+
+  void _mapAddWishEventToState(AddToWishlist event, Emitter<WishlistState> emit) async {
+    try {
+      emit(state.copyWith(status: WishlistStatus.loading));
+      await WishlistService().addWish(wish: event.wish, wishImage: event.file);
+      emit(state.copyWith(status: WishlistStatus.success, wishlistStream: wishList));
+    } catch (error) {
+      emit(state.copyWith(status: WishlistStatus.error));
+      log(error.toString());
+    }
+  }
+
+  void _mapEditWishEventToState(EditWish event, Emitter<WishlistState> emit) async {
+    try {
+      emit(state.copyWith(status: WishlistStatus.loading));
+      await WishlistService().editWish(wish: event.wish, wishImage: event.file);
+      emit(state.copyWith(status: WishlistStatus.success, wishlistStream: wishList));
+    } catch (error) {
+      emit(state.copyWith(status: WishlistStatus.error));
+      log(error.toString());
     }
   }
 }

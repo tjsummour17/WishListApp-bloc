@@ -1,4 +1,4 @@
-import 'package:wishlist_app/models/wish.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wishlist_app/services/wishlist_service.dart';
 
 class WishlistRepository {
@@ -8,5 +8,5 @@ class WishlistRepository {
 
   final WishlistService service;
 
-  Future<List<Wish>> getGames(userId) async => service.fetchWishlist(userId);
+  Future<Stream<QuerySnapshot<Object?>>> fetchWishlist(userId) async => await service.fetchWishlist(userId);
 }

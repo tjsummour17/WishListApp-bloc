@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.pink,
                 shadowColor: Colors.grey.withOpacity(0.50),
                 scaffoldBackgroundColor: backgroundLightColor,
-                colorScheme: ColorScheme.light(background: backgroundLightColor, primary: primaryLightColor),
+                colorScheme: ColorScheme.light(background: backgroundLightColor, primary: primaryLightColor, secondary: primaryLightColor),
                 appBarTheme: AppBarTheme(
                     titleTextStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: primaryLightColor),
                     color: backgroundLightColor,
@@ -75,19 +75,12 @@ class MyApp extends StatelessWidget {
                 appBarTheme: AppBarTheme(color: backgroundDarkColor, elevation: 0),
                 textTheme: const TextTheme(button: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                 inputDecorationTheme: const InputDecorationTheme(contentPadding: EdgeInsets.all(7.5), filled: true)),
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate
-            ],
+            localizationsDelegates: const [AppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
             supportedLocales: Lang.all,
             onGenerateRoute: (route) {
               switch (route.name) {
                 case MainPage.id:
-                  return userProvider.user == null
-                      ? MaterialPageRoute(builder: (context) => LoginPage())
-                      : MaterialPageRoute(builder: (context) => const MainPage());
+                  return userProvider.user == null ? MaterialPageRoute(builder: (context) => LoginPage()) : MaterialPageRoute(builder: (context) => const MainPage());
                 case LoginPage.id:
                   return MaterialPageRoute(builder: (context) => LoginPage());
                 case NewWishForm.id:

@@ -13,15 +13,15 @@ extension WishlistStatusX on WishlistStatus {
 }
 
 class WishlistState extends Equatable {
-  const WishlistState({this.status = WishlistStatus.initial, required this.wishlist});
+  const WishlistState({this.status = WishlistStatus.initial, this.wishlistStream});
 
-  final List<Wish> wishlist;
+  final Stream<QuerySnapshot>? wishlistStream;
   final WishlistStatus status;
 
   @override
-  List<Object?> get props => [status, wishlist];
+  List<Object?> get props => [status, wishlistStream];
 
-  WishlistState copyWith({List<Wish>? wishlist, WishlistStatus? status}) {
-    return WishlistState(wishlist: wishlist ?? this.wishlist, status: status ?? this.status);
+  WishlistState copyWith({Stream<QuerySnapshot>? wishlistStream, WishlistStatus? status}) {
+    return WishlistState(wishlistStream: wishlistStream ?? this.wishlistStream, status: status ?? this.status);
   }
 }

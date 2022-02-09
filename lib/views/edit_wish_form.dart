@@ -13,20 +13,34 @@ import 'package:wishlist_app/services/wishlist_repository.dart';
 import 'package:wishlist_app/services/wishlist_service.dart';
 import 'package:wishlist_app/views/widgets/default_themes.dart';
 
-class NewWishForm extends StatefulWidget {
-  static const String id = "/NewWish";
+class EditWishForm extends StatefulWidget {
+  final Wish wish;
 
-  const NewWishForm({Key? key}) : super(key: key);
+  const EditWishForm({Key? key, required this.wish}) : super(key: key);
 
   @override
-  _NewWishFormState createState() => _NewWishFormState();
+  _EditWishFormState createState() => _EditWishFormState();
 }
 
-class _NewWishFormState extends State<NewWishForm> {
-  File? _pickedFile;
+class _EditWishFormState extends State<EditWishForm> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  String imageUrl = "";
+  File? _pickedFile;
+
+  @override
+  void initState() {
+    super.initState();
+    titleController.text = widget.wish.title;
+    descriptionController.text = widget.wish.description ?? "";
+    getImage();
+  }
+
+  getImage() async {
+    imageUrl = await WishlistService.getImageUrl(widget.wish.imageRef);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +52,7 @@ class _NewWishFormState extends State<NewWishForm> {
         providers: [BlocProvider<WishlistBloc>(create: (context) => wishlistBloc)],
         child: BlocBuilder<WishlistBloc, WishlistState>(builder: (context, state) {
           return Scaffold(
-            appBar: AppBar(title: Text(AppLocalizations.of(context)!.addNewWish)),
+            appBar: AppBar(title: Text(AppLocalizations.of(context)!.editWish)),
             body: ListView(padding: const EdgeInsets.all(20), children: [
               Container(
                 padding: const EdgeInsets.all(20),
@@ -49,7 +63,11 @@ class _NewWishFormState extends State<NewWishForm> {
                     children: [
                       CircleAvatar(
                         radius: 50,
-                        foregroundImage: _pickedFile != null ? FileImage(_pickedFile!) : null,
+                        backgroundImage: _pickedFile == null
+                            ? imageUrl.isEmpty
+                                ? null
+                                : NetworkImage(imageUrl)
+                            : FileImage(_pickedFile!) as ImageProvider,
                         child: _pickedFile == null
                             ? IconButton(
                                 onPressed: () async {
@@ -73,14 +91,13 @@ class _NewWishFormState extends State<NewWishForm> {
                           child: ElevatedButton(
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  wishlistBloc.add(AddToWishlist(
+                                  wishlistBloc.add(EditWish(
                                       userId: userProvider.user!.id,
-                                      wish: Wish(userId: userProvider.user!.id, title: titleController.text, description: descriptionController.text),
-                                      file: _pickedFile));
+                                      wish: Wish(userId: userProvider.user!.id, title: titleController.text, description: descriptionController.text, docId: widget.wish.docId)));
                                   Navigator.pop(context);
                                 }
                               },
-                              child: Text(AppLocalizations.of(context)!.addNewWish, style: Theme.of(context).textTheme.button)))
+                              child: Text(AppLocalizations.of(context)!.editWish, style: Theme.of(context).textTheme.button)))
                     ],
                   ),
                 ),

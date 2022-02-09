@@ -17,5 +17,16 @@
   "settings": "Settings",
   "home": "Home",
   "noWishesFound": "No wishes found do you want to add a new wish to your wishlist?",
-  "addNewWish": "Add New Wish"
+  "addNewWish": "Add New Wish",
+  "welcomeMessage": "Welcome {value},",
+  "@welcomeMessage": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "title": "Title",
+  "description": "Description",
+  "editWish": "Edit Wish"
 }
