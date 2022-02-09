@@ -1,3 +1,21 @@
 {
-  "appName": "Wishlist"
+  "appName": "Wishlist App",
+  "username": "User Name",
+  "password": "Password",
+  "login": "Login",
+  "usernameError": "User name must contains at least 3 characters",
+  "passwordError": "Password must contains at least 4 characters",
+  "logout": "Logout",
+  "logoutDescription": "Are you sure to logout?",
+  "yes": "Yes",
+  "no": "No",
+  "language": "Language",
+  "theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "systemDefault": "System default",
+  "settings": "Settings",
+  "home": "Home",
+  "noWishesFound": "No wishes found do you want to add a new wish to your wishlist?",
+  "addNewWish": "Add New Wish"
 }
